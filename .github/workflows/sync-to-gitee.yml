@@ -17,6 +17,7 @@ jobs:
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
           account_type: user
+          clone_style: "ssh"
           static_list: 'zimeiti'
           # 如需只同步特定仓库，取消注释并修改：
           # static_list: 'repo1,repo2'

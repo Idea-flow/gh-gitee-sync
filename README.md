@@ -59,7 +59,10 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmRqP0f3... gitee-sync
 
 ⑤ 打开 [Gitee SSH 公钥设置页面](https://gitee.com/profile/sshkeys)，点击 **添加公钥**，将刚才复制的内容粘贴到"公钥"输入框，"标题"随便填（如 `github-sync`），点击确定。
 
-> **为什么要这么做？** 简单说：GitHub Actions 要推送代码到你的 Gitee 仓库，需要证明"我是账号主人"。SSH 密钥对就是身份证：你把公钥（锁）交给 Gitee 备案，私钥（钥匙）放在 GitHub Secrets 里，Actions 运行时用私钥"开锁"，Gitee 检查公钥匹配就放行。
+⑥ **同样把公钥添加到 GitHub**（因为同步私有仓库需要用 SSH 方式克隆）：
+打开 [GitHub SSH Keys 设置页面](https://github.com/settings/keys)，点击 **New SSH key**，标题填 `gitee-sync`，将同样的公钥内容粘贴进去，点击 Add SSH key。
+
+> **为什么要这么做？** 由于 `zimeiti` 是私有仓库，我们需要用 SSH 方式克隆代码（而非 HTTPS）。这把 SSH 密钥同时用于两件事：从 GitHub **克隆**代码（GitHub 验证身份）+ 推送到 Gitee（Gitee 验证身份）。所以公钥要同时添加到 GitHub 和 Gitee。
 
 ### 2. 在 GitHub 仓库配置
 
@@ -69,7 +72,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmRqP0f3... gitee-sync
 
 | Name | Value |
 |------|-------|
-| `GITEE_PRIVATE_KEY` | SSH **私钥**内容，即 `~/.ssh/id_ed25519_gitee` 的全文 |
+| `GITEE_PRIVATE_KEY` | SSH **私钥**内容，即 `./id_ed25519_gitee` 的全文 |
 | `GITEE_TOKEN` | Gitee 私人令牌的字符串 |
 
 **Variables（变量）** — 切换到 Variables 标签，添加：
