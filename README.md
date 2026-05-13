@@ -24,13 +24,42 @@
 
 **GITEE_TOKEN**：在 [Gitee 个人设置 → 私人令牌](https://gitee.com/profile/personal_access_tokens) 创建，勾选 `projects` 权限。
 
-**GITEE_PRIVATE_KEY**：生成 SSH 密钥对，将**公钥**添加到 [Gitee SSH 公钥](https://gitee.com/profile/sshkeys)：
+**GITEE_PRIVATE_KEY**：生成一组 SSH 密钥（包含一个私钥和一个公钥），GitHub Actions 用私钥连接 Gitee，Gitee 用公钥来验证身份。
+
+① 打开终端，执行以下命令生成密钥对：
 
 ```bash
-ssh-keygen -t ed25519 -C "gitee-sync" -f ~/.ssh/id_ed25519_gitee
-# 查看公钥并添加到 Gitee
-cat ~/.ssh/id_ed25519_gitee.pub
+ssh-keygen -t ed25519 -C "gitee-sync" -f ./id_ed25519_gitee
 ```
+
+② 执行过程中会提示输入密码，**直接按回车跳过**（不要设置密码，否则 Actions 无法自动使用）：
+
+```
+Enter passphrase (empty for no passphrase):   ← 直接回车
+Enter same passphrase again:                  ← 直接回车
+```
+
+③ 命令执行完后，当前目录下会多出两个文件：
+- `id_ed25519_gitee` — **私钥**（绝不能泄露），稍后填入 GitHub Secrets
+- `id_ed25519_gitee.pub` — **公钥**（可以公开），需要添加到 Gitee
+
+> 这两个文件生成在当前目录，用完记得不要误提交到 Git。
+
+④ 查看公钥内容，复制它：
+
+```bash
+cat ./id_ed25519_gitee.pub
+```
+
+会输出类似这样的内容（全部复制）：
+
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmRqP0f3... gitee-sync
+```
+
+⑤ 打开 [Gitee SSH 公钥设置页面](https://gitee.com/profile/sshkeys)，点击 **添加公钥**，将刚才复制的内容粘贴到"公钥"输入框，"标题"随便填（如 `github-sync`），点击确定。
+
+> **为什么要这么做？** 简单说：GitHub Actions 要推送代码到你的 Gitee 仓库，需要证明"我是账号主人"。SSH 密钥对就是身份证：你把公钥（锁）交给 Gitee 备案，私钥（钥匙）放在 GitHub Secrets 里，Actions 运行时用私钥"开锁"，Gitee 检查公钥匹配就放行。
 
 ### 2. 在 GitHub 仓库配置
 
