@@ -12,7 +12,7 @@ jobs:
       - name: Mirror GitHub repos to Gitee
         uses: Yikun/hub-mirror-action@master
         with:
-          src: github/${{ vars.GITHUB_USERNAME }}
+          src: github/${{ vars.GH_USERNAME }}
           dst: gitee/${{ vars.GITEE_USERNAME }}
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}

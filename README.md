@@ -12,7 +12,7 @@
 
 | 配置项 | 来源 | 说明 |
 |--------|------|------|
-| `vars.GITHUB_USERNAME` | GitHub Variables | 你的 GitHub 用户名 |
+| `vars.GH_USERNAME` | GitHub Variables | 你的 GitHub 用户名 |
 | `vars.GITEE_USERNAME` | GitHub Variables | 你的 Gitee 用户名 |
 | `secrets.GITEE_PRIVATE_KEY` | GitHub Secrets | Gitee 账号的 SSH 私钥 |
 | `secrets.GITEE_TOKEN` | GitHub Secrets | Gitee 个人访问令牌 |
@@ -47,7 +47,7 @@ cat ~/.ssh/id_ed25519_gitee.pub
 
 | Name | Value |
 |------|-------|
-| `GITHUB_USERNAME` | 你的 GitHub 用户名，如 `wangpenglong` |
+| `GH_USERNAME` | 你的 GitHub 用户名，如 `wangpenglong` |
 | `GITEE_USERNAME` | 你的 Gitee 用户名 |
 
 ### 3. 手动触发验证
