@@ -79,12 +79,45 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmRqP0f3... gitee-sync
 
 | Name | Value |
 |------|-------|
-| `GH_USERNAME` | 你的 GitHub 用户名，如 `wangpenglong` |
+| `GH_USERNAME` | 你的 GitHub 用户名，如 `Idea-flow` |
 | `GITEE_USERNAME` | 你的 Gitee 用户名 |
 
 ### 3. 手动触发验证
 
 进入 GitHub 仓库 **Actions** 页面，选择 **Sync zimeiti to Gitee** 工作流，点击 **Run workflow** → 绿色按钮，等待执行完成，检查日志是否成功。
+
+## 同步策略配置
+
+### 全量强制同步
+
+默认是增量同步（只推送新增提交），如需让 Gitee 与 GitHub **完全一致**（包括删除的分支、回退的提交等），在 workflow 中加 `force_update: true`：
+
+```yaml
+with:
+  force_update: true
+```
+
+加上后会用 `git push -f` 强制覆盖 Gitee 仓库，**谨慎使用**。
+
+### 禁止同步某些仓库
+
+在 workflow 的 `with` 中添加 `black_list` 参数，多个仓库名用逗号分隔：
+
+```yaml
+with:
+  black_list: 'repo-archive,repo-deprecated,test-playground'
+```
+
+### 只允许同步某些仓库
+
+用 `white_list` 或 `static_list` 指定白名单：
+
+```yaml
+with:
+  white_list: 'repo1,repo2'
+```
+
+> **三个参数优先级**：`static_list` > `black_list` > `white_list`。`static_list` 会完全替代自动发现的仓库列表，仅同步列出的仓库。
 
 ## 常见问题
 
