@@ -1,17 +1,18 @@
-# GitHub → Gitee 全仓库镜像同步
+# GitHub → Gitee 仓库镜像同步
 
-通过 GitHub Actions 将 **GitHub 账号下所有仓库** 自动同步到 Gitee，支持定时（每小时）+ 手动触发。
+通过 GitHub Actions 将**指定仓库**自动同步到 Gitee，支持每天定时 + 手动触发。
 
 ## 工作原理
 
-使用 [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 自动发现 GitHub 账号下所有仓库，同步到同名的 Gitee 仓库（不存在则自动创建）。
+使用 [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 将 `static_list` 中指定的仓库同步到同名的 Gitee 仓库（不存在则自动创建）。
 
 ## 工作流配置说明
 
 当前工作流文件 `.github/workflows/sync-to-gitee.yml` 中使用了以下配置项：
 
 | 配置项 | 来源 | 说明 |
-|--------|------|------|
+|-------|------|------|
+| `static_list` | 硬编码 | 仅同步指定仓库列表（共 16 个） |
 | `vars.GH_USERNAME` | GitHub Variables | 你的 GitHub 用户名 |
 | `vars.GITEE_USERNAME` | GitHub Variables | 你的 Gitee 用户名 |
 | `secrets.GITEE_PRIVATE_KEY` | GitHub Secrets | Gitee 账号的 SSH 私钥 |

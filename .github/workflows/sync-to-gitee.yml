@@ -18,8 +18,7 @@ jobs:
           dst_token: ${{ secrets.GITEE_TOKEN }}
           account_type: user
           clone_style: "ssh"
-          # 如需只同步特定仓库，取消注释：
-          # static_list: 'repo1,repo2'
+          static_list: 'gh-gitee-sync,YunyuStudio,JavaInterviewObsidian,zimeiti,ideaflow-web-tool,AiPromptHub,YunyuCanvas,m3u8download,Yunyu,asmr-serverless,Ideaflow-web-blog,SelfToolsStudio,MacRightClick,wallpaper,Ideaflow-web,ideaflow-admin'
           # 如需排除特定仓库，取消注释：
           # black_list: 'repo-archive,repo-deprecated'
           # 如需强制覆盖 Gitee（全量同步），取消注释：
