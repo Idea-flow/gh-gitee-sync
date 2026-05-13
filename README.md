@@ -1,10 +1,10 @@
-# GitHub → Gitee 仓库同步（测试）
+# GitHub → Gitee 全仓库镜像同步
 
-通过 GitHub Actions 手动触发，将指定 GitHub 仓库同步到 Gitee，用于验证同步链路是否可用。
+通过 GitHub Actions 将 **GitHub 账号下所有仓库** 自动同步到 Gitee，支持定时（每小时）+ 手动触发。
 
 ## 工作原理
 
-使用 [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 将指定仓库同步到同名的 Gitee 仓库（不存在则自动创建）。
+使用 [Yikun/hub-mirror-action](https://github.com/Yikun/hub-mirror-action) 自动发现 GitHub 账号下所有仓库，同步到同名的 Gitee 仓库（不存在则自动创建）。
 
 ## 工作流配置说明
 
@@ -16,7 +16,6 @@
 | `vars.GITEE_USERNAME` | GitHub Variables | 你的 Gitee 用户名 |
 | `secrets.GITEE_PRIVATE_KEY` | GitHub Secrets | Gitee 账号的 SSH 私钥 |
 | `secrets.GITEE_TOKEN` | GitHub Secrets | Gitee 个人访问令牌 |
-| `static_list: 'zimeiti'` | 硬编码 | 当前仅同步 `zimeiti` 这一个仓库 |
 
 ## 配置步骤
 
@@ -84,7 +83,9 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmRqP0f3... gitee-sync
 
 ### 3. 手动触发验证
 
-进入 GitHub 仓库 **Actions** 页面，选择 **Sync zimeiti to Gitee** 工作流，点击 **Run workflow** → 绿色按钮，等待执行完成，检查日志是否成功。
+进入 GitHub 仓库 **Actions** 页面，选择 **Sync all repos to Gitee** 工作流，点击 **Run workflow** → 绿色按钮，等待执行完成，检查日志是否成功。
+
+> 后续 GitHub 仓库有新的推送时，每小时会自动同步一次，也可以随时手动触发。
 
 ## 同步策略配置
 
