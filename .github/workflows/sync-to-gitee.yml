@@ -1,0 +1,23 @@
+name: Sync all repos from GitHub to Gitee
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # 每 30 分钟自动同步
+  workflow_dispatch:          # 支持手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror GitHub repos to Gitee
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/${{ vars.GITHUB_USERNAME }}
+          dst: gitee/${{ vars.GITEE_USERNAME }}
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          account_type: user
+          # 如需只同步特定仓库，取消注释并修改：
+          # static_list: 'repo1,repo2'
+          # 如需排除特定仓库，取消注释并修改：
+          # black_list: 'repo-archive,repo-deprecated'
