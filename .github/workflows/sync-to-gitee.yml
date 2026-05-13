@@ -1,9 +1,9 @@
-name: Sync all repos from GitHub to Gitee
+name: Sync zimeiti to Gitee
 
 on:
-  schedule:
-    - cron: '*/30 * * * *'  # 每 30 分钟自动同步
-  workflow_dispatch:          # 支持手动触发
+  # schedule:
+  #   - cron: '*/30 * * * *'  # 每 30 分钟自动同步（暂注释）
+  workflow_dispatch:          # 仅手动触发
 
 jobs:
   sync:
@@ -17,6 +17,7 @@ jobs:
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
           account_type: user
+          static_list: 'zimeiti'
           # 如需只同步特定仓库，取消注释并修改：
           # static_list: 'repo1,repo2'
           # 如需排除特定仓库，取消注释并修改：
